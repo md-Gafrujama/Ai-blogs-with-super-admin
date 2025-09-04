@@ -9,7 +9,7 @@ import parse from 'html-react-parser'
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
 import { useRouter } from 'next/navigation';
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
+import { baseURL } from '@/config/api';
 
 const Page = () => {
   const [isPublished, setIsPublished] = useState(false);
@@ -58,7 +58,7 @@ const Page = () => {
   useEffect(() => {
     const fetchApprovedCompanies = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/api/super-admin/getRequests`)
+        const res = await axios.get(`${baseURL}/api/super-admin/getRequests`)
         const data = res.data
         let companies = []
         if (Array.isArray(data)) {
@@ -85,7 +85,7 @@ const Page = () => {
       const token = localStorage.getItem('token');
       // Call the backend endpoint using axios with Authorization header
       const response = await axios.post(
-        `${baseUrl}/api/blog/generate`,
+        `${baseURL}/api/blog/generate`,
         { prompt: data.title },
         {
           headers: {
@@ -140,7 +140,7 @@ const Page = () => {
 
     try {
       setLoading(true)
-      const response = await axios.post(`${baseUrl}/api/blog/add`, formData);
+      const response = await axios.post(`${baseURL}/api/blog/add`, formData);
       if (response.data.success) {
         toast.success('Blog added successfully!');
         setTimeout(() => {

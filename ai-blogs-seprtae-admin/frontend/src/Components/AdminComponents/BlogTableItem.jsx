@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { EyeIcon, EyeSlashIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { useAppContext } from '@/context/AppContext'
 import toast from 'react-hot-toast'
-
+import { baseURL } from '@/config/api';
 const BlogTableItem = ({ blog, fetchBlogs, index }) => {
     const router = useRouter();
     const isPublished = blog.isPublished;
@@ -13,7 +13,7 @@ const BlogTableItem = ({ blog, fetchBlogs, index }) => {
 
     const handlePublish = async () => {
       try {
-        const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
+        // const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
         const { data } = await axios.post(`${baseURL}/api/blog/toggle-publish`, { id: blog._id });
         if (data.success) {
           toast.success('Blog published!');
@@ -27,7 +27,7 @@ const BlogTableItem = ({ blog, fetchBlogs, index }) => {
     };
     const handleUnpublish = async () => {
       try {
-        const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
+        // const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
         const { data } = await axios.post(`${baseURL}/api/blog/toggle-publish`, { id: blog._id });
         if (data.success) {
           toast.success('Blog unpublished!');
@@ -42,7 +42,7 @@ const BlogTableItem = ({ blog, fetchBlogs, index }) => {
     const handleDelete = async () => {
       if (confirm('Are you sure you want to delete this blog?')) {
         try {
-          const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
+          // const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
           const { data } = await axios.post(`${baseURL}/api/blog/delete`, { id: blog._id });
           if (data.success) {
             toast.success('Blog deleted!');

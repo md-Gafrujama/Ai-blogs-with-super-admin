@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { useAppContext } from "@/context/AppContext";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
+import { baseURL } from '@/config/api';
+// const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
 
 const Login = () => {
   const { axios, setToken } = useAppContext();
@@ -20,8 +20,8 @@ const Login = () => {
       // Dynamically set endpoint
       const endpoint =
         role === "admin"
-          ? `${baseUrl}/api/admin/login`
-          : `${baseUrl}/api/super-admin/login`;
+          ? `${baseURL}/api/admin/login`
+          : `${baseURL}/api/super-admin/login`;
 
       const { data } = await axios.post(endpoint, { email, password });
 

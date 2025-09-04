@@ -2,7 +2,7 @@ import React from 'react'
 import { assets } from '@/Assets/assets';
 import { useAppContext } from '@/context/AppContext';
 import toast from 'react-hot-toast';
-
+import { baseURL } from '@/config/api';
 const CommentTableItem = ({ comment, fetchComments }) => {
   const { blog, createdAt, _id } = comment;
   const BlogDate = new Date(createdAt);
@@ -11,7 +11,7 @@ const CommentTableItem = ({ comment, fetchComments }) => {
 
     const approveComment = async () =>{
       try {
-        const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
+        // const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
         const {data} = await axios.post(`${baseURL}/api/admin/approve-comment`, {id: _id})
         if (data.success) {
           toast.success(data.message)
@@ -30,7 +30,7 @@ const CommentTableItem = ({ comment, fetchComments }) => {
         const confirm = window.confirm('Are you sure you want to delete this comment?');
         if(!confirm) return;
 
-        const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
+        // const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
         const {data} = await axios.post(`${baseURL}/api/admin/delete-comment`, {id: _id})
         if (data.success) {
           toast.success(data.message)

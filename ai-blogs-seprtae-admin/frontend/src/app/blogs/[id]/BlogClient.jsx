@@ -12,7 +12,7 @@ import { motion } from 'framer-motion';
 import NavbarNew from "@/Components/NavbarNew";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faGooglePlusG, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-
+import { baseURL } from '@/config/api';
 const BlogClient = ({ slug }) => {
   const [data, setData] = useState(null);
   const [comments, setComments] = useState([]);
@@ -29,8 +29,7 @@ const BlogClient = ({ slug }) => {
   const generateStructuredData = (blog) => {
     if (!blog) return null;
     
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
-    const blogUrl = `${baseUrl}/blogs/${blog.slug}`;
+    const blogUrl = `${baseURL}/blogs/${blog.slug}`;
     
     return {
       "@context": "https://schema.org",
@@ -47,7 +46,7 @@ const BlogClient = ({ slug }) => {
         "name": "AI Blog",
         "logo": {
           "@type": "ImageObject",
-          "url": `${baseUrl}/logo.png`
+          "url": `${baseURL}/logo.png`
         }
       },
       "datePublished": blog.date || blog.createdAt,
@@ -78,7 +77,7 @@ const BlogClient = ({ slug }) => {
     if (!slug) return;
     try {
       const company = localStorage.getItem("company");
-      const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
+      // const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
       const response = await axios.get(`${baseURL}/api/blog/slug/${slug}`);
       if (response.data.success && response.data.blog && response.data.blog.company === `${company}`) {
         setData(response.data.blog);
@@ -96,7 +95,7 @@ const BlogClient = ({ slug }) => {
   const fetchComments = async () => {
     if (!slug) return;
     try {
-      const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
+      // const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
       const res = await axios.post(`${baseURL}/api/blog/comments`, { blogSlug: slug });
       if (res.data.success) setComments(res.data.comments);
     } catch (error) {
@@ -110,7 +109,7 @@ const BlogClient = ({ slug }) => {
     if (!name.trim() || !content.trim()) return;
     setIsSubmitting(true);
     try {
-      const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
+      // const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
       const res = await axios.post(`${baseURL}/api/blog/add-comment`, {
         blog: data._id,
         name,
@@ -131,8 +130,8 @@ const BlogClient = ({ slug }) => {
   // Social share handler with enhanced metadata
   const handleSocialShare = (platform) => {
     if (!data) return;
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const url = encodeURIComponent(`${baseUrl}/blogs/${slug}`);
+    // const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+    const url = encodeURIComponent(`${baseURL}/blogs/${slug}`);
     const title = encodeURIComponent(data.title);
     const description = encodeURIComponent(
       data.description?.replace(/<[^>]+>/g, '').slice(0, 160) || ''
@@ -176,7 +175,7 @@ const onSubmitHandler = async (e) => {
   setIsSubscribing(true);
 
   try {
-    const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
+    // const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
 
     // ✅ Send JSON with email + company
     const { data } = await axios.post(`${baseURL}/api/blog/subscribe`, {
@@ -223,7 +222,7 @@ const onSubmitHandler = async (e) => {
     if (data && data.category) {
       const fetchRelated = async () => {
         try {
-          const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
+          // const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
           const response = await axios.get(`${baseURL}/api/blog/all`);
           if (response.data.success) {
             // Filter by same category, exclude current blog, limit to 3 and same company

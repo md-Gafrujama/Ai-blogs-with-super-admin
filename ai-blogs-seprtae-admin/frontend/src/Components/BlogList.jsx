@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext, createContext } from 'react'
 import { motion } from "motion/react"
 import axios from 'axios';
 import BlogItem from '@/Components/BlogItem';
-
+import { baseURL } from '@/config/api';
 // Create context
 const AppContext = createContext();
 const company = localStorage.getItem("company");
@@ -171,7 +171,7 @@ const BlogList = () => {
   const fetchBlogs = async () => {
     setIsLoading(true);
     try {
-      const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
+      // const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000';
       const response = await axios.get(`${baseURL}/api/blog/all`);
      
       const filteredBlogs = response.data.blogs.filter(blog => blog.company === `${company}`);

@@ -1,3 +1,5 @@
+import { baseURL } from '@/config/api';
+
 export const metadata = {
   title: 'AI Blog - Latest Technology & Startup Insights',
   description: 'Discover the latest insights on technology, startups, and lifestyle. Read expert articles and stay updated with trending topics.',
@@ -6,7 +8,7 @@ export const metadata = {
     title: 'AI Blog - Latest Technology & Startup Insights',
     description: 'Discover the latest insights on technology, startups, and lifestyle. Read expert articles and stay updated with trending topics.',
     type: 'website',
-    url: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5000',
+    url: baseURL,
     siteName: 'AI Blog',
     images: [
       {
