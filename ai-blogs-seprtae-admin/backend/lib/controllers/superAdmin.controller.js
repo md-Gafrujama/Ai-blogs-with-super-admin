@@ -136,7 +136,7 @@ import jwt from "jsonwebtoken";
 import SuperAdmin from "../models/SuperAdminModel.js";
 import Blog from "../models/BlogModel.js";
 import Request from "../models/requestModel.js";
-import Admin from "../models/AdminModel.js"; // Added missing import
+import Admin from "../models/adminModel.js"; // Added missing import
 
 export const superAdminSignup = async (req, res) => {
   try {
