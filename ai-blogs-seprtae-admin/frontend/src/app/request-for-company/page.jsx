@@ -1,8 +1,12 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import axios from 'axios'
 
 const RegistrationForm = () => {
+  const router = useRouter()
+
   const [formData, setFormData] = useState({
     fullname: '',
     company: '',
@@ -58,16 +62,13 @@ const RegistrationForm = () => {
     if (!validateForm()) return
     setIsSubmitting(true)
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog/request`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/blog/request`,
+        formData,
+        { headers: { 'Content-Type': 'application/json' } }
+      )
 
-      const data = await res.json()
-      console.log("📌 API Response:", data) // Debugging
-
-      if (res.ok && data.success) {
+      if (res.status === 200 && res.data.success) {
         setRegistrationStatus('pending')
         setShowSuccessModal(true)
         setFormData({
@@ -78,7 +79,7 @@ const RegistrationForm = () => {
         })
       } else {
         setRegistrationStatus('rejected')
-        setErrors({ api: data.message || 'Registration failed' })
+        setErrors({ api: res.data.message || 'Registration failed' })
       }
     } catch (error) {
       console.error("❌ API Error:", error)
@@ -88,7 +89,7 @@ const RegistrationForm = () => {
     }
   }
 
-  // Success Modal Component
+  // ✅ Success Modal Component
   const SuccessModal = () => (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 text-center">
@@ -106,10 +107,13 @@ const RegistrationForm = () => {
           </div>
         </div>
         <button
-          onClick={() => setShowSuccessModal(false)}
+          onClick={() => {
+            setShowSuccessModal(false)
+            router.push("/signup")
+          }}
           className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium"
         >
-          Got it!
+          Go to Signup
         </button>
       </div>
     </div>
@@ -125,9 +129,7 @@ const RegistrationForm = () => {
               <div className="text-3xl text-white">🏢</div>
             </div>
             <h1 className="text-4xl font-bold text-gray-900 mb-2">Company Registration</h1>
-            <p className="text-lg text-gray-600">
-              Join our platform and grow your business
-            </p>
+            <p className="text-lg text-gray-600">Join our platform and grow your business</p>
             {registrationStatus && (
               <div className="mt-4">
                 <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
