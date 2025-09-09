@@ -10,7 +10,8 @@ const SuperAdminPanel = () => {
   const [filterStatus, setFilterStatus] = useState('all')
   const [isProcessing, setIsProcessing] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [deleted , setDeleted] = useState(false);
 
   // Fetch registrations from API
   useEffect(() => {
@@ -56,6 +57,35 @@ const SuperAdminPanel = () => {
       default: return '📋'
     }
   }
+
+const handleDelete = async (id) => {
+  if (!confirm("Are you sure you want to delete this request?")) return;
+
+  try {
+    const response = await fetch(
+      `${NEXT_PUBLIC_BASE_URL}/api/super-admin/deleteRequest/${id}`, // <-- id in params
+      {
+        method: "DELETE",
+      }
+    );
+
+    const data = await response.json();
+    setDeleted(true);
+    console.log("Delete success:", data);
+
+    if (data.success) {
+      // remove from state directly instead of refetch
+      setRegistrations((prev) => prev.filter((reg) => reg._id !== id && reg.id !== id));
+      alert("Request deleted successfully!");
+    } else {
+      alert(data.message || "Failed to delete request");
+    }
+  } catch (error) {
+    console.error("Error deleting request:", error);
+    alert("Error deleting request. Please try again.");
+  }
+};
+
 
   const handleStatusChange = async (registrationId, newStatus, rejectionReason = '') => {
     setIsProcessing(true)
@@ -399,6 +429,16 @@ const SuperAdminPanel = () => {
                           View Details
                         </button>
                       </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+<button
+  onClick={() => handleDelete(registration._id || registration.id)}
+  className="text-red-600 hover:text-red-900 hover:underline"
+>
+  Delete Request
+</button>
+
+                      </td>
+
                     </tr>
                   ))}
                 </tbody>

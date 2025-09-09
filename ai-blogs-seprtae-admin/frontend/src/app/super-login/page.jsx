@@ -6,20 +6,19 @@ import { useRouter } from "next/navigation";
 import { baseURL } from '@/config/api';
 // const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
 
-const Login = () => {
+const SuperLogin = () => {
   const { axios, setToken } = useAppContext();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("admin"); // default role = admin
+  const [role, setRole] = useState("super-admin"); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      //set endpoint for admin
-      const endpoint = `${baseURL}/api/admin/login`
-      
+    //    set endpoint for superAdmin
+      const endpoint =`${baseURL}/api/super-admin/login`;
 
       const { data } = await axios.post(endpoint, { email, password });
 
@@ -30,9 +29,8 @@ const Login = () => {
         localStorage.setItem("company", data.company);
         axios.defaults.headers.common["Authorization"] = data.token;
 
-      
-          router.push("/admin/dashboard");
-      
+          router.push("/super-admin/dashboard");
+        
       } else {
         toast.error(data.message);
       }
@@ -47,10 +45,10 @@ const Login = () => {
         <div className="flex flex-col items-center justify-center">
           <div className="w-full py-6 text-center">
             <h1 className="text-3xl font-bold">
-              <span className="text-[#5044E5]">{role === "admin" }</span> Login
+              <span className="text-[#5044E5]">{role ===  "Super Admin"}</span> Login
             </h1>
             <p className="font-light">
-              Enter your credentials to access the Admin panel
+              Enter your credentials to access the {role} panel
             </p>
           </div>
           <form
@@ -99,4 +97,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SuperLogin;
