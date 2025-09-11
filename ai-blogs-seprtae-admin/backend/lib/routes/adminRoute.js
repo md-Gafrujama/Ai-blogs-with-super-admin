@@ -1,5 +1,5 @@
 import express from "express";
-import {adminSignup, adminLogin, approveCommentById, deleteCommentById, getAllBlogsAdmin, getAllComments, getDashboard, getAllEmails, deleteEmailById } from "../controllers/admin.controller.js";
+import { updatePassword, adminSignup, adminLogin, approveCommentById, deleteCommentById, getAllBlogsAdmin, getAllComments, getDashboard, getAllEmails, deleteEmailById } from "../controllers/admin.controller.js";
 import auth from "../middlewares/auth.middleware.js";
 //  import redis from "../config/redis.js";
 
@@ -16,6 +16,7 @@ adminRouter.get("/dashboard", auth, getDashboard);
 adminRouter.get("/emails", auth, getAllEmails);
 adminRouter.delete("/emails", auth, deleteEmailById);
 adminRouter.post("/signUp",adminSignup);
+adminRouter.put("/updatePassword" , updatePassword);
 
 
 export default adminRouter;

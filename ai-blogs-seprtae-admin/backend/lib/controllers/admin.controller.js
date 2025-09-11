@@ -164,3 +164,29 @@ export const deleteEmailById = async (req, res) => {
        res.json({success: false, message: error.message}) 
     }
 }
+
+
+export const updatePassword = async (req, resp) => {
+  try {
+    const { id } = req.query;         
+    const { password } = req.body;      
+
+    if (!id || !password) {
+      return resp.status(400).json({ success: false, msg: "ID and password are required" });
+    }
+
+    const result = await Admin.updateOne(
+      { _id: id }, 
+      { $set: { password: password } }   
+    );
+
+    if (result.modifiedCount === 0) {
+      return resp.status(404).json({ success: false, msg: "Admin not found or password unchanged" });
+    }
+
+    resp.json({ success: true, msg: "Password updated successfully" });
+  } catch (error) {
+    console.error(error);
+    resp.status(500).json({ success: false, msg: "Some error occurred" });
+  }
+};
