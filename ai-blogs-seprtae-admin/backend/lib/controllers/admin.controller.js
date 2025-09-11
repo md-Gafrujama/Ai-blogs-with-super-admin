@@ -168,7 +168,7 @@ export const deleteEmailById = async (req, res) => {
 
 export const updatePassword = async (req, resp) => {
   try {
-    const { id } = req.query;         
+    const { id } = req.params;         
     const { password } = req.body;      
 
     if (!id || !password) {
