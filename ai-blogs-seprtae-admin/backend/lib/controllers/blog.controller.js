@@ -83,25 +83,47 @@ export const addBlog = async (req, res) => {
           // Send individual emails to each subscriber
           for (const email of recipientEmails) {
             try {
-              const msg = {
-                to: email,
-                from: process.env.FROM_EMAIL || 'no-reply@example.com',
-                subject: `New blog: ${created.title}`,
-                html: `
-                  <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-                    <h2 style="margin: 0 0 12px;">${created.title}</h2>
-                    <p style="margin: 0 0 12px;">${created.description?.slice(0, 180) || ''}...</p>
-                    <p style="margin: 0 0 12px;">
-                      <a href="${blogUrl}" target="_blank" rel="noopener noreferrer">Read the full post</a>
-                    </p>
-                    <hr style="border: none; border-top: 1px solid #eee; margin: 16px 0;"/>
-                    <p style="font-size: 12px; color: #666;">You received this because you subscribed to our newsletter.</p>
-                    <p style="font-size: 12px; color: #666;">
-                      <a href="${siteBaseUrl}/unsubscribe?email=${encodeURIComponent(email)}" style="color: #666;">Unsubscribe</a>
-                    </p>
-                  </div>
-                `,
-              };
+const msg = {
+  to: email,
+  from: process.env.FROM_EMAIL || 'no-reply@example.com',
+  subject: `📰 New Blog Published: ${created ? created.title : blog.title}`,
+  html: `
+  <div style="max-width:600px; margin:0 auto; font-family: Arial, Helvetica, sans-serif; line-height:1.6; color:#333; background:#f9f9f9; padding:20px; border-radius:8px;">
+    <!-- Header -->
+    <div style="text-align:center; padding-bottom:20px; border-bottom:1px solid #ddd;">
+      <h1 style="margin:0; font-size:24px; color:#222;">${created ? created.company : blog.company} Newsletter</h1>
+    </div>
+
+    <!-- Blog Content -->
+    <div style="padding:20px 0;">
+      <h2 style="font-size:20px; margin:0 0 12px; color:#444;">${created ? created.title : blog.title}</h2>
+      <p style="margin:0 0 12px; font-size:15px; color:#555;">
+        ${(created ? created.description : blog.description)?.slice(0, 200) || ''}...
+      </p>
+
+      <p style="margin:20px 0;">
+        <a href="${blogUrl}" target="_blank" rel="noopener noreferrer" 
+          style="background:#007BFF; color:#fff; padding:12px 20px; border-radius:5px; text-decoration:none; font-size:15px; display:inline-block;">
+          👉 Read Full Blog
+        </a>
+      </p>
+    </div>
+
+    <!-- Divider -->
+    <hr style="border:none; border-top:1px solid #ddd; margin:20px 0;"/>
+
+    <!-- Footer -->
+    <div style="text-align:center; font-size:12px; color:#888;">
+      <p>You’re receiving this email because you subscribed to <strong>${created ? created.company : blog.company}</strong> updates.</p>
+      <p>
+        <a href="${siteBaseUrl}/unsubscribe?email=${encodeURIComponent(email)}" 
+           style="color:#888; text-decoration:underline;">Unsubscribe</a>
+      </p>
+    </div>
+  </div>
+  `,
+};
+
 
               // Try different possible method names for sending emails
               if (typeof emailService.sendMail === 'function') {

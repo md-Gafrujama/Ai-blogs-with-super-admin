@@ -3,7 +3,7 @@ import cors from 'cors';
 import blogRouter from './lib/routes/blogRoute.js';
 import adminRouter from './lib/routes/adminRoute.js';
 import emailRouter from './lib/routes/emailRoute.js';
-import superAdminRouter from './lib/routes/superAdminroutes.js';  // ✅ Import super admin routes
+import superAdminRouter from './lib/routes/superAdminroutes.js';  
 import { ConnectDB } from './lib/config/db.js';
 // import redis from './lib/config/redis.js';
 import 'dotenv/config';
@@ -12,9 +12,6 @@ ConnectDB();
 
 const app = express();
 
-// redis.on("connect" , ()=>{
-//   console.log("redis connected successfully");
-// })
 
 app.use(
   cors({
