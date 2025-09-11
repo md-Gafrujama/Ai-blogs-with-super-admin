@@ -16,7 +16,7 @@ adminRouter.get("/dashboard", auth, getDashboard);
 adminRouter.get("/emails", auth, getAllEmails);
 adminRouter.delete("/emails", auth, deleteEmailById);
 adminRouter.post("/signUp",adminSignup);
-adminRouter.put("/updatePassword" , updatePassword);
+adminRouter.put("/updatePassword/:id" , updatePassword);
 
 
 export default adminRouter;
