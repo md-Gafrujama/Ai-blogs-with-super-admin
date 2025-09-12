@@ -76,8 +76,8 @@ export const addBlog = async (req, res) => {
         const recipientEmails = subscribers.map(s => s.email).filter(Boolean);
 
         console.log('📰 Newsletter recipients (create):', recipientEmails.length, 'company:', created.company);
-        console.log('📰 SMTP_USER configured:', !!process.env.SMTP_USER);
-        console.log('📰 FROM_EMAIL configured:', !!process.env.FROM_EMAIL);
+        console.log('📰 SMTP_USER configured:', !!companyWiseSMTP[COMPANY].SMTP_USER);
+        console.log('📰 FROM_EMAIL configured:', !!companyWiseSMTP[COMPANY].FROM_EMAIL);
 
         const companyBaseURL = {
            personifiedb2b:"https://blogs.personifiedb2bmarketing.com",
@@ -85,8 +85,33 @@ export const addBlog = async (req, res) => {
            company3:"",
            company4:""
         }
+
+       const  companyWiseSMTP = {
+
+          personifiedb2b:{
+            SMTP_PASS:"uwlfybytsnfeuvwe",
+            SMTP_USER:"mdrizwan6386@gmail.com",
+            FROM_EMAIL:"mdrizwan6386@gmail.com"
+
+          },
+
+          QuoreIT:{
+            SMTP_PASS:"",
+            SMTP_USER:"",
+            FROM_EMAIL:""
+
+          },
+
+          personifiedb2b:{
+            SMTP_PASS:"",
+            SMTP_USER:"",
+            FROM_EMAIL:""
+
+          },
+
+        }
         
-        if (recipientEmails.length > 0 && process.env.SMTP_USER) {
+        if (recipientEmails.length > 0 && companyWiseSMTP[COMPANY].SMTP_USER) {
 
           const siteBaseUrl = companyBaseURL[COMPANY];
           const blogUrl = `${siteBaseUrl}/blogs/${created.slug}`;
@@ -96,7 +121,7 @@ export const addBlog = async (req, res) => {
             try {
 const msg = {
   to: email,
-  from: process.env.FROM_EMAIL || 'no-reply@example.com',
+  from: companyWiseSMTP[COMPANY].FROM_EMAIL || 'no-reply@example.com',
   subject: `📰 New Blog Published: ${created ? created.title : blog.title}`,
   html: `
   <div style="max-width:600px; margin:0 auto; font-family: Arial, Helvetica, sans-serif; line-height:1.6; color:#333; background:#f9f9f9; padding:20px; border-radius:8px;">
@@ -232,8 +257,8 @@ export const togglePublish = async (req, res) => {
         const recipientEmails = subscribers.map(s => s.email).filter(Boolean);
 
         console.log('Newsletter recipients (toggle):', recipientEmails.length, 'company:', blog.company);
-        if (recipientEmails.length > 0 && process.env.SMTP_USER) {
-          const siteBaseUrl = process.env.SITE_BASE_URL || 'https://example.com';
+        if (recipientEmails.length > 0 && companyWiseSMTP[COMPANY].SMTP_USER) {
+          const siteBaseUrl = siteBaseUrl[COMPANY]|| 'https://example.com';
           const blogUrl = `${siteBaseUrl}/blogs/${blog.slug}`;
 
           // Send individual emails to each subscriber
@@ -241,7 +266,7 @@ export const togglePublish = async (req, res) => {
             try {
               const msg = {
                 to: email,
-                from: process.env.FROM_EMAIL || 'no-reply@example.com',
+                from:companyWiseSMTP[COMPANY].FROM_EMAIL || 'no-reply@example.com',
                 subject: `New blog: ${blog.title}`,
                 html: `
                   <div style="font-family: Arial, sans-serif; line-height: 1.6;">
