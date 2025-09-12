@@ -168,25 +168,24 @@ export const deleteEmailById = async (req, res) => {
 
 export const updatePassword = async (req, resp) => {
   try {
-    const { id } = req.params;         
-    const { password } = req.body;      
+    const { email, password } = req.body;
 
-    if (!id || !password) {
-      return resp.status(400).json({ success: false, msg: "ID and password are required" });
+    if (!email || !password) {
+      return resp.status(400).json({ success: false, msg: "Email and password are required" });
     }
 
     const result = await Admin.updateOne(
-      { _id: id }, 
-      { $set: { password: password } }   
+      { email: email }, 
+      { $set: { password: password } }
     );
 
-    if (result.modifiedCount === 0) {
-      return resp.status(404).json({ success: false, msg: "Admin not found or password unchanged" });
+    if (result.matchedCount === 0) {
+      return resp.status(404).json({ success: false, msg: "User not found" });
     }
 
-    resp.json({ success: true, msg: "Password updated successfully" });
-  } catch (error) {
-    console.error(error);
-    resp.status(500).json({ success: false, msg: "Some error occurred" });
+    return resp.json({ success: true, msg: "Password updated successfully" });
+  } catch (err) {
+    console.error(err);
+    return resp.status(500).json({ success: false, msg: "Server error" });
   }
 };

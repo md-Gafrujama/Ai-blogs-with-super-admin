@@ -50,6 +50,15 @@ const navLinks = [
       </svg>
     ),
   },
+   {
+    href: "/admin/settings",
+    label: "Settings",
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v8a2 2 0 01-2 2H7a2 2 0 01-2-2V10a2 2 0 012-2h2m6-4v4m0 0l-2-2m2 2l2-2" />
+      </svg>
+    ),
+  },
 ];
 
 const Sidebar = () => {
