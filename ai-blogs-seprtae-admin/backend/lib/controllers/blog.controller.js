@@ -28,15 +28,18 @@ function slugify(text) {
     .replace(/-+$/, '');             // Trim - from end of text
 }
 
+var COMPANY = "";
 export const addBlog = async (req, res) => {
   try {
     // If using FormData, fields are in req.body, file in req.file
     const { title, description, category, author, authorImg, isPublished, company } = req.body;
+   
     const imageFile = req.file;
 
     if (!title || !description || !category || !author || !authorImg || !imageFile || !company) {
       return res.json({ success: false, message: "Missing required fields" });
     }
+     COMPANY = req.body.company;
 
     const fileBuffer = fs.readFileSync(imageFile.path);
 
@@ -75,9 +78,17 @@ export const addBlog = async (req, res) => {
         console.log('📰 Newsletter recipients (create):', recipientEmails.length, 'company:', created.company);
         console.log('📰 SMTP_USER configured:', !!process.env.SMTP_USER);
         console.log('📰 FROM_EMAIL configured:', !!process.env.FROM_EMAIL);
+
+        const companyBaseURL = {
+           personifiedb2b:"https://blogs.personifiedb2bmarketing.com",
+           QuoreIT:"",
+           company3:"",
+           company4:""
+        }
         
         if (recipientEmails.length > 0 && process.env.SMTP_USER) {
-          const siteBaseUrl = process.env.SITE_BASE_URL || 'https://example.com';
+
+          const siteBaseUrl = companyBaseURL[COMPANY];
           const blogUrl = `${siteBaseUrl}/blogs/${created.slug}`;
 
           // Send individual emails to each subscriber
