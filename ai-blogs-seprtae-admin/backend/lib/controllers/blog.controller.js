@@ -11,7 +11,7 @@ import Request from '../models/requestModel.js';
 // ------------------------- CONFIG ------------------------- //
 const companyBaseURL = {
   personifiedb2b: "https://blogs.personifiedb2bmarketing.com",
-  QuoreIT: "",
+  quoreit: "https://quore-it-ai-blogs.vercel.app",
   company3: "",
   company4: ""
 };
@@ -22,10 +22,10 @@ const companyWiseSMTP = {
     SMTP_USER: "mdrizwan6386@gmail.com",
     FROM_EMAIL: "mdrizwan6386@gmail.com"
   },
-  QuoreIT: {
-    SMTP_PASS: "",
-    SMTP_USER: "",
-    FROM_EMAIL: ""
+  quoreit: {
+    SMTP_PASS: "uwlfybytsnfeuvwe",
+    SMTP_USER: "mdrizwan6386@gmail.com",
+    FROM_EMAIL: "mdrizwan6386@gmail.com"
   },
   company3: {
     SMTP_PASS: "",
