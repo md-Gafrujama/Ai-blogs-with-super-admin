@@ -56,7 +56,7 @@ export const adminLogin = async (req, res)=>{
         const {email, password} = req.body;
 
 
-        const admin = await Admin.findOne({ email });
+        const admin = await Admin.findOne({ email, password});
         const company = admin.company;
 
         if(!admin){    
