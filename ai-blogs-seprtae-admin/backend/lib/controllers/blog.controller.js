@@ -177,17 +177,22 @@ export const getAllBlogs = async (req, res) => {
 
 export const getBlogById = async (req, res) => {
   try {
-    const { blogId } = req.params;
-    const blog = await Blog.findById(blogId);
+    const { id } = req.params; // use `id` since your route has :id
+    const blog = await Blog.findById(id);
+
     if (!blog) {
-      return res.json({ success: false, message: "Blog not found" });
+      return res.status(404).json({ message: "Blog not found" });
     }
-    res.json({ success: true, blog });
+
+   
+    res.json(blog);
+
   } catch (error) {
     console.error(error);
-    res.json({ success: false, message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
+
 
 export const deleteBlogById = async (req, res) => {
   try {

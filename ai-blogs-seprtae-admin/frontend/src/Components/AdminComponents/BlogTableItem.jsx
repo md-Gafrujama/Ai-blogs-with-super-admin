@@ -55,6 +55,11 @@ const BlogTableItem = ({ blog, fetchBlogs, index }) => {
         }
       }
     };
+
+    const handleEdit = () => {
+ router.push(`../admin/editBlog/${blog._id}`);
+    }
+
     return (
       <tr className='bg-white border-b'>
         <th scope='row' className='items-center gap-3 hidden sm:flex px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>
@@ -106,6 +111,14 @@ const BlogTableItem = ({ blog, fetchBlogs, index }) => {
             >
               <TrashIcon className="w-4 h-4" />
               Delete
+            </button>
+                        <button
+              className="flex items-center gap-1 px-3 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200 text-xs border border-red-600 font-semibold"
+              onClick={handleEdit}
+              title="Delete blog"
+            >
+              <TrashIcon className="w-4 h-4" />
+              Edit
             </button>
           </div>
         </td>

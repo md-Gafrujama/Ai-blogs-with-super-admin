@@ -107,7 +107,7 @@ export const getDashboard = async (req, res) =>{
         const comments = await Comment.countDocuments();
         const drafts = await Blog.countDocuments({isPublished: false});
 
-        // Dynamic company blog counts
+ 
         const companyCounts = await Blog.aggregate([
           { $group: { _id: "$company", count: { $sum: 1 } } }
         ]);
@@ -188,4 +188,41 @@ export const updatePassword = async (req, resp) => {
     console.error(err);
     return resp.status(500).json({ success: false, msg: "Server error" });
   }
+}
+
+ export const editBlogs = async (req, resp) => {
+  try {
+   
+    const { id } = req.params;
+
+    if (!id) {
+      return resp.status(400).json({ error: "Blog ID is required" });
+    }
+
+    const result = await Blog.findByIdAndUpdate(
+      id,
+      req.body, { new: true }
+    );
+
+    if (!result) {
+      return resp.status(404).json({ error: "Blog not found" });
+    }
+
+    return resp.json({ message: "Blog updated successfully", blog: result });
+  } catch (err) {
+    return resp
+      .status(500)
+      .json({ error: "Unexpected error while updating blog", details: err.message });
+  }
 };
+
+
+// export const deleteBlog = async (req, res) => {
+//   try {
+//     const deletedBlog = await Blog.findByIdAndDelete(req.params.id);
+//     if (!deletedBlog) return res.status(404).json({ error: "Blog not found" });
+//     res.json({ message: "Blog deleted successfully" });
+//   } catch (err) {
+//     res.status(500).json({ error: "Error deleting blog" });
+//   }
+// };

@@ -21,5 +21,6 @@ blogRouter.post('/comments',cachedData("comments"),  getBlogComments);
 blogRouter.post('/request' ,  request);
 blogRouter.post('/generate', auth, generateContent);
 blogRouter.post('/subscribe' , subscribeEmail );
+blogRouter.get('/getBlogById/:id', getBlogById);
 
 export default blogRouter;

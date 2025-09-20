@@ -9,7 +9,7 @@ const ListBlog = () => {
   const [blogs, setBlogs] = useState([]);
   const { axios } = useAppContext();
 
-  // Fetch blogs for company "Zto"
+  // Fetch blogs for company 
   const fetchBlogs = async () => {
     try {
       const token = localStorage.getItem('token');
