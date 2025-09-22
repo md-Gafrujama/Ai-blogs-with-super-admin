@@ -1,6 +1,3 @@
-
-
-
 'use client'
 
 import React, { useEffect, useState } from 'react'
@@ -146,7 +143,7 @@ const handleDelete = async (id) => {
     }
 
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="fixed inset-0 bg-gray-700/30 flex items-center justify-center p-4 z-50">
         <div className="bg-white rounded-2xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
           {/* Header */}
           <div className="flex justify-between items-center mb-6 pb-4 border-b">
@@ -164,7 +161,7 @@ const handleDelete = async (id) => {
             {/* Status */}
             <div className="bg-gray-50 rounded-lg p-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-600">Current Status:</span>
+                <span className="text-sm font-medium text-gray-800">Current Status:</span>
                 <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(selectedRegistration.status)}`}>
                   {getStatusIcon(selectedRegistration.status)} {selectedRegistration.status ? selectedRegistration.status.charAt(0).toUpperCase() + selectedRegistration.status.slice(1) : '-'}
                 </span>
@@ -178,7 +175,7 @@ const handleDelete = async (id) => {
                   <span className="mr-2">👤</span>
                   Personal Information
                 </h3>
-                <div className="space-y-2 text-sm">
+                <div className="space-y-2 text-sm text-gray-800">
                   <div><span className="font-medium">Name:</span> {selectedRegistration.fullname}</div>
                   <div><span className="font-medium">Email:</span> {selectedRegistration.email}</div>
                   {/* If you add phone in your model, show it here */}
@@ -190,7 +187,7 @@ const handleDelete = async (id) => {
                   <span className="mr-2">🏢</span>
                   Company Information
                 </h3>
-                <div className="space-y-2 text-sm">
+                <div className="space-y-2 text-sm text-gray-800">
                   <div><span className="font-medium">Company:</span> {selectedRegistration.company}</div>
                   <div><span className="font-medium">Business Type:</span> {selectedRegistration.businessType}</div>
                   <div><span className="font-medium">Submitted:</span> {formatDate(selectedRegistration.createdAt)}</div>
@@ -258,7 +255,7 @@ const handleDelete = async (id) => {
             {selectedRegistration.status !== 'pending' && (
               <div className="bg-gray-50 rounded-lg p-4">
                 <h3 className="font-semibold text-gray-900 mb-2">Review Information</h3>
-                <div className="text-sm text-gray-700 space-y-1">
+                <div className="text-sm text-gray-800 space-y-1">
                   <div><span className="font-medium">Reviewed At:</span> {formatDate(selectedRegistration.reviewedAt)}</div>
                   <div><span className="font-medium">Reviewed By:</span> {selectedRegistration.reviewedBy}</div>
                   {selectedRegistration.rejectionReason && (
@@ -277,7 +274,7 @@ const handleDelete = async (id) => {
   }
 
   return (
-    <div className="w-full bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4 sm:p-6 lg:p-8">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8">
           <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
