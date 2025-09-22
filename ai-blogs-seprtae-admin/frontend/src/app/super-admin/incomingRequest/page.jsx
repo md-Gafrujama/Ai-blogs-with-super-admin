@@ -1,3 +1,6 @@
+
+
+
 'use client'
 
 import React, { useEffect, useState } from 'react'
@@ -274,21 +277,20 @@ const handleDelete = async (id) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="w-full bg-gradient-to-br from-blue-50 via-white to-purple-50">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <div className="text-3xl text-white">👨‍💼</div>
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="text-2xl sm:text-3xl text-white">👨‍💼</div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Super Admin Panel</h1>
-          <p className="text-lg text-gray-600">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">Super Admin Panel</h1>
+          <p className="text-sm sm:text-base lg:text-lg text-gray-600">
             Manage Company Registration Requests
           </p>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
             <div className="flex items-center">
               <div className="text-2xl mr-3">📋</div>
@@ -337,16 +339,23 @@ const handleDelete = async (id) => {
         </div>
 
         {/* Filter Section */}
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-            <label htmlFor="filter" className="text-sm font-medium text-gray-700">
+            <label htmlFor="filter" className="text-sm font-semibold text-gray-700">
               Filter by Status:
             </label>
             <select
               id="filter"
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+              className="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 appearance-none cursor-pointer min-w-[200px]"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                backgroundPosition: 'right 0.5rem center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: '1.5em 1.5em',
+                paddingRight: '2.5rem'
+              }}
             >
               <option value="all">All Registrations</option>
               <option value="pending">Pending</option>
@@ -367,90 +376,134 @@ const handleDelete = async (id) => {
               <p className="text-gray-600">No registrations match the current filter.</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
+            <>
+            {/* Desktop Table View */}
+            <div className="hidden lg:block">
+              <div className="overflow-x-auto rounded-lg border border-gray-200">
+                <table className="w-full divide-y divide-gray-200">
+                <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-3 lg:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                       Company
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-3 lg:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                       Contact
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-3 lg:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                       Business Type
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-3 lg:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-3 lg:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                       Submitted
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-3 lg:px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredRegistrations.map((registration) => (
-                    <tr key={registration._id || registration.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">
+                  {filteredRegistrations.map((registration, index) => (
+                    <tr key={registration._id || registration.id} className={`hover:bg-blue-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}`}>
+                      <td className="px-3 lg:px-6 py-4">
+                        <div className="max-w-[200px]">
+                          <div className="text-sm font-semibold text-gray-900 truncate">
                             {registration.company}
                           </div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-xs text-gray-500 truncate mt-1">
                             {registration.fullname}
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{registration.email}</div>
-                        {/* <div className="text-sm text-gray-500">{registration.phone || '-'}</div> */}
+                      <td className="px-3 lg:px-6 py-4">
+                        <div className="text-sm text-gray-900 truncate max-w-[200px]" title={registration.email}>
+                          {registration.email}
+                        </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                      <td className="px-3 lg:px-6 py-4">
+                        <span className="inline-flex px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
                           {registration.businessType || '-'}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 py-1 text-xs font-medium rounded-full border ${getStatusColor(registration.status)}`}>
-                          {getStatusIcon(registration.status)} {registration.status ? registration.status.charAt(0).toUpperCase() + registration.status.slice(1) : '-'}
+                      <td className="px-3 lg:px-6 py-4">
+                        <span className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full border ${getStatusColor(registration.status)}`}>
+                          <span className="mr-1">{getStatusIcon(registration.status)}</span>
+                          {registration.status ? registration.status.charAt(0).toUpperCase() + registration.status.slice(1) : '-'}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {formatDate(registration.createdAt)}
+                      <td className="px-3 lg:px-6 py-4 text-sm text-gray-500">
+                        <div className="max-w-[120px] truncate" title={formatDate(registration.createdAt)}>
+                          {formatDate(registration.createdAt)}
+                        </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button
-                          onClick={() => openRegistrationModal(registration)}
-                          className="text-blue-600 hover:text-blue-900 hover:underline"
-                        >
-                          View Details
-                        </button>
+                      <td className="px-3 lg:px-6 py-4">
+                        <div className="flex flex-col xl:flex-row xl:space-x-2 space-y-1 xl:space-y-0">
+                          <button
+                            onClick={() => openRegistrationModal(registration)}
+                            className="inline-flex items-center px-3 py-1 text-xs font-medium text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 hover:text-blue-700 transition-colors"
+                          >
+                            View
+                          </button>
+                          <button
+                            onClick={() => handleDelete(registration._id || registration.id)}
+                            className="inline-flex items-center px-3 py-1 text-xs font-medium text-red-600 bg-red-50 rounded-md hover:bg-red-100 hover:text-red-700 transition-colors"
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-<button
-  onClick={() => handleDelete(registration._id || registration.id)}
-  className="text-red-600 hover:text-red-900 hover:underline"
->
-  Delete Request
-</button>
-
-                      </td>
-
                     </tr>
                   ))}
                 </tbody>
-              </table>
+                </table>
+              </div>
             </div>
+
+            {/* Mobile Card View */}
+            <div className="lg:hidden space-y-4 p-4">
+              {filteredRegistrations.map((registration) => (
+                <div key={registration._id || registration.id} className="bg-gray-50 rounded-lg p-4 space-y-3">
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-gray-900">{registration.company}</h3>
+                      <p className="text-sm text-gray-600">{registration.fullname}</p>
+                    </div>
+                    <span className={`px-2 py-1 text-xs font-medium rounded-full border ${getStatusColor(registration.status)}`}>
+                      {getStatusIcon(registration.status)} {registration.status ? registration.status.charAt(0).toUpperCase() + registration.status.slice(1) : '-'}
+                    </span>
+                  </div>
+                  
+                  <div className="space-y-2 text-sm">
+                    <div><span className="font-medium text-gray-700">Email:</span> <span className="text-gray-600">{registration.email}</span></div>
+                    <div><span className="font-medium text-gray-700">Business Type:</span> <span className="text-gray-600">{registration.businessType || '-'}</span></div>
+                    <div><span className="font-medium text-gray-700">Submitted:</span> <span className="text-gray-600">{formatDate(registration.createdAt)}</span></div>
+                  </div>
+                  
+                  <div className="flex space-x-3 pt-2 border-t border-gray-200">
+                    <button
+                      onClick={() => openRegistrationModal(registration)}
+                      className="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                    >
+                      View Details
+                    </button>
+                    <button
+                      onClick={() => handleDelete(registration._id || registration.id)}
+                      className="flex-1 bg-red-600 text-white py-2 px-3 rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            </>
           )}
         </div>
-      </div>
 
-      {/* Registration Modal */}
-      {showModal && <RegistrationModal />}
-    </div>
+        {/* Registration Modal */}
+        {showModal && <RegistrationModal />}
+      </div>
   )
 }
 
