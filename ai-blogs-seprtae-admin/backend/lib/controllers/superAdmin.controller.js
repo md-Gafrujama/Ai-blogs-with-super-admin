@@ -85,12 +85,12 @@ export const approveRequest = async (req, res) => { // Fixed parameter name
     const { id } = req.params;
     const { status, rejectionReason } = req.body;
 
-    // validate status
+  
     if (!["approved", "rejected", "pending"].includes(status)) {
       return res.json({ success: false, message: "Invalid status value" });
     }
 
-    // find request first
+  
     const request = await Request.findById(id);
     if (!request) {
       return res.json({ success: false, message: "Request not found" });
@@ -132,6 +132,7 @@ export const deleteRequest = async (req, resp) => {
     const { id } = req.params;
 
     const result = await Request.deleteOne({ _id: id });
+    await Admin.deleteMany({ _id: id });
 
     if (result.deletedCount === 0) {
       return resp.status(404).json({ message: "request not found" });
