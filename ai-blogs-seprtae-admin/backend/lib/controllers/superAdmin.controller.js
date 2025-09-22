@@ -127,20 +127,46 @@ export const approveRequest = async (req, res) => { // Fixed parameter name
   }
 };
 
+
 export const deleteRequest = async (req, resp) => {
   try {
     const { id } = req.params;
 
-    const result = await Request.deleteOne({ _id: id });
-    await Admin.deleteMany({ _id: id });
-
-    if (result.deletedCount === 0) {
+  
+    const companyDoc = await Request.findById(id);
+    if (!companyDoc) {
       return resp.status(404).json({ message: "request not found" });
     }
 
-    resp.json({ message: "request deleted successfully" });
+
+    await Request.deleteOne({ _id: id });
+
+  
+    await Admin.deleteMany({ company: companyDoc.company });
+    await Blog.deleteMany({company: companyDoc.company});
+
+    resp.json({ message: "request and related admins deleted successfully" });
   } catch (error) {
     console.error(error);
     resp.status(500).json({ message: "error deleting the request" });
   }
 };
+
+
+// export const deleteRequest = async (req, resp) => {
+//   try {
+//     const { id } = req.params;
+
+//     const result = await Request.deleteOne({ _id: id });
+//     await Admin.deleteMany({ _id: id });
+
+//     if (result.deletedCount === 0) {
+//       return resp.status(404).json({ message: "request not found" });
+//     }
+
+//     resp.json({ message: "request deleted successfully" });
+//   } catch (error) {
+//     console.error(error);
+//     resp.status(500).json({ message: "error deleting the request" });
+//   }
+// };
