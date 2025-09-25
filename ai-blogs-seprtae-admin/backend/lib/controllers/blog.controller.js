@@ -40,6 +40,7 @@ const companyWiseSMTP = {
 };
 
 // ------------------------- HELPERS ------------------------- //
+
 function escapeRegex(text) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
