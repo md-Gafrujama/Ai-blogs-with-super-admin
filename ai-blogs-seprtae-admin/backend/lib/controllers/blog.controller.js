@@ -119,10 +119,10 @@ async function sendNewsletter(blog) {
 // ------------------------- CONTROLLERS ------------------------- //
 export const addBlog = async (req, res) => {
   try {
-    const { title, description, category, author, authorImg, isPublished, company } = req.body;
+    const { title, description, category, author, authorImg, isPublished, company, department, subcategory } = req.body;
     const imageFile = req.file;
 
-    if (!title || !description || !category || !author || !authorImg || !imageFile || !company) {
+    if (!title || !description || !category || !author || !authorImg || !imageFile || !company || !department || !subcategory) {
       return res.json({ success: false, message: "Missing required fields" });
     }
 
@@ -146,9 +146,17 @@ export const addBlog = async (req, res) => {
     const slug = slugify(title);
 
     const created = await Blog.create({ 
-      title, description, category, author, authorImg, 
-      image: optimizedImageUrl, slug, company, 
-      isPublished: isPublished === 'true' 
+      title,
+      description,
+      category,
+      department,
+      subcategory,
+      author,
+      authorImg,
+      image: optimizedImageUrl,
+      slug,
+      company,
+      isPublished: isPublished === 'true'
     });
 
     if (created.isPublished) {
