@@ -123,6 +123,7 @@ const Page = () => {
   
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    console.log({ title: data.title, category: data.category, author: data.author, image, company });
     if (!data.title || !data.category || !data.author || !image || !company) {
       toast.error('Please fill all required fields');
       return;

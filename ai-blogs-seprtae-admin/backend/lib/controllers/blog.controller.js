@@ -27,10 +27,10 @@ const companyWiseSMTP = {
     SMTP_USER: "mdrizwan6386@gmail.com",
     FROM_EMAIL: "mdrizwan6386@gmail.com"
   },
-  company3: {
-    SMTP_PASS: "",
-    SMTP_USER: "",
-    FROM_EMAIL: ""
+  Zonal_Talent_Olympiad: {
+    SMTP_PASS: "uwlfybytsnfeuvwe",
+    SMTP_USER: "mdrizwan6386@gmail.com",
+    FROM_EMAIL: "mdrizwan6386@gmail.com"
   },
   company4: {
     SMTP_PASS: "",

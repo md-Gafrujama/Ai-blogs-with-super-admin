@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-async function main(prompt, modelName = "gemini-1.5-flash") {
+async function main(prompt, modelName = "gemini-2.5-flash") {
   try {
     const model = ai.getGenerativeModel({ model: modelName });
     
@@ -30,5 +30,17 @@ async function main(prompt, modelName = "gemini-1.5-flash") {
     return `[Gemini API Error]: ${error.message || "Unknown error occurred."}`;
   }
 }
+
+async function listModels() {
+  try {
+    const models = await ai.listModels();
+    console.log("Available models:", models);
+  } catch (error) {
+    console.error("Error listing models:", error);
+  }
+}
+
+// Execute the function to list models
+listModels();
 
 export default main;
